@@ -1,8 +1,10 @@
 import { PrismaClient } from '@prisma/client'
+
 import { books } from './constants/books'
 import { categories } from './constants/categories'
 import { ratings } from './constants/ratings'
 import { users } from './constants/users'
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -12,27 +14,28 @@ async function main() {
   await prisma.category.deleteMany()
   await prisma.book.deleteMany()
 
-  const usersSeed = users.map((user) => {
-    return prisma.user.create({
+  const usersSeed = users.map((user) =>
+    prisma.user.create({
       data: {
         id: user.id,
         name: user.name,
+        email: user.email,
         avatar_url: user.avatar_url,
       },
-    })
-  })
+    }),
+  )
 
-  const categoriesSeed = categories.map((category) => {
-    return prisma.category.create({
+  const categoriesSeed = categories.map((category) =>
+    prisma.category.create({
       data: {
         name: category.name,
         id: category.id,
       },
-    })
-  })
+    }),
+  )
 
-  const booksSeed = books.map((book) => {
-    return prisma.book.create({
+  const booksSeed = books.map((book) =>
+    prisma.book.create({
       data: {
         id: book.id,
         name: book.name,
@@ -42,23 +45,21 @@ async function main() {
         total_pages: book.total_pages,
         categories: {
           create: [
-            ...book.categories.map((category) => {
-              return {
-                category: {
-                  connect: {
-                    id: category.id,
-                  },
+            ...book.categories.map((category) => ({
+              category: {
+                connect: {
+                  id: category.id,
                 },
-              }
-            }),
+              },
+            })),
           ],
         },
       },
-    })
-  })
+    }),
+  )
 
-  const ratingsSeed = ratings.map((rating) => {
-    return prisma.rating.create({
+  const ratingsSeed = ratings.map((rating) =>
+    prisma.rating.create({
       data: {
         id: rating.id,
         rate: rating.rate,
@@ -70,15 +71,10 @@ async function main() {
           connect: { id: rating.book_id },
         },
       },
-    })
-  })
+    }),
+  )
 
-  await prisma.$transaction([
-    ...categoriesSeed,
-    ...booksSeed,
-    ...usersSeed,
-    ...ratingsSeed,
-  ])
+  await prisma.$transaction([...categoriesSeed, ...booksSeed, ...usersSeed, ...ratingsSeed])
 }
 
 main()
