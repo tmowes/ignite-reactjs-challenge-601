@@ -1,9 +1,5 @@
+import { BookWithRating } from '@/models/book'
+
 export type BookCardProps = {
-  name: string
-  publishedDate: string
-  avatarUrl: string
-  title: string
-  author: string
-  cover: string
-  comment: string
+  data: BookWithRating
 }

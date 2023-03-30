@@ -7,17 +7,18 @@ import { BookCardProps } from './types'
 import * as S from './styles'
 
 export function BookCard(props: BookCardProps) {
-  const { name, publishedDate, avatarUrl, title, author, cover, comment } = props
+  const { data } = props
+  const { name, created_at, cover_url, author, summary } = data
   const [open, setOpen] = useState(false)
 
-  const published_date = dayjs(publishedDate)
+  const published_date = dayjs(created_at)
   const publishedDateFormatted = published_date.format('DD[ de ]MMMM[ às ]HH:mm')
   const publishedDistanceToNow = published_date.fromNow()
 
   return (
     <S.Container>
       <S.Header>
-        <Avatar src={avatarUrl} name={name} />
+        <Avatar src={cover_url} name={name} />
         <span>{name}</span>
         <time title={publishedDateFormatted} dateTime={published_date.toISOString()}>
           {publishedDistanceToNow}
@@ -27,26 +28,26 @@ export function BookCard(props: BookCardProps) {
 
       <S.Content>
         <S.BookCover
-          src={cover}
+          src={`http://localhost:3000${cover_url}`}
           height={152}
           width={108}
           quality={100}
-          alt={`${title} cover`}
+          alt={`${name} cover`}
         />
 
         <S.BookInfos>
-          <strong>{title}</strong>
+          <strong>{name}</strong>
           <span>{author}</span>
         </S.BookInfos>
 
         <S.CollapsibleRoot open={open} onOpenChange={setOpen} css={{ width: '100%' }}>
           <S.CommentContainer>
             <p>
-              {comment.substring(0, 229)}{' '}
+              {summary?.substring(0, 229)}{' '}
               {!open ? (
                 '...'
               ) : (
-                <S.CollapsibleContent>{comment.substring(229)}</S.CollapsibleContent>
+                <S.CollapsibleContent>{summary.substring(229)}</S.CollapsibleContent>
               )}
             </p>
             <S.CollapsibleTrigger asChild>

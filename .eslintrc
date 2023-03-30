@@ -5,6 +5,7 @@
   ],
   "rules": {
     "jsx-a11y/label-has-associated-control": "off",
-    "no-restricted-exports": "off"
+    "no-restricted-exports": "off",
+    "no-underscore-dangle": "off"
   }
 }

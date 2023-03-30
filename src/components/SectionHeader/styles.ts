@@ -2,21 +2,32 @@ import { styled } from '@/styles/stitches.config'
 
 export const Container = styled('div', {
   display: 'flex',
+  textDecoration: 'none',
+  alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: '$1',
+  marginBottom: '$10',
+  gap: '$2',
 })
 
 export const NavButton = styled('button', {
-  all: 'unset',
   background: 'none',
   border: 'none',
-  display: 'flex',
   alignItems: 'center',
-  color: '$purple100',
+  display: 'flex',
+  fontSize: '$md',
   fontWeight: '$bold',
-  fontSize: '$3',
+  color: '$purple100',
+  padding: '$2 0 $2 $2',
+  borderRadius: '$sm',
   cursor: 'pointer',
   '&:hover': {
-    color: '$purple200',
+    backgroundColor: '#8381D90F',
+    boxShadow: '0 0 6px #8381D940',
+  },
+  a: {
+    textDecoration: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$2',
   },
 })

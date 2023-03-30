@@ -1,17 +1,26 @@
+import Link from 'next/link'
+
 import { SectionHeader } from '@/components/SectionHeader'
 import { TrendingCard } from '@/components/TrendingCard'
 import { MainLayout } from '@/layouts/Main'
+import { api } from '@/libs/axios'
+import { BookWithRating } from '@/models/book'
+import { useQuery } from '@tanstack/react-query'
 import { CaretRight, ChartLineUp } from 'phosphor-react'
 
 import * as S from './styles'
 
 export default function Home() {
+  const { data: trendingBooks } = useQuery<BookWithRating[]>(['trending-books'], async () => {
+    const { data } = await api.get('/books/trending')
+    return data?.books ?? []
+  })
   return (
     <MainLayout>
       <S.Container>
         <S.RecentViewsSection>
           <S.Header>
-            <ChartLineUp size={24} />
+            <ChartLineUp size={32} />
             <h3>Início</h3>
           </S.Header>
           <SectionHeader label="Sua última leitura">
@@ -21,39 +30,14 @@ export default function Home() {
         </S.RecentViewsSection>
         <S.TrendingSection>
           <SectionHeader label="Livros populares">
-            Ver todos <CaretRight size={16} weight="bold" />
+            <Link href="/explore" as="a">
+              Ver todos <CaretRight size={16} weight="bold" />
+            </Link>
           </SectionHeader>
           <S.TrendingList>
-            <TrendingCard
-              title="14 Hábitos de DesenvolvedoresAltamente Produtivos"
-              author="Zeno Rocha"
-              cover="http://localhost:3000/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png"
-              rating={4.5}
-            />
-            <TrendingCard
-              title="14 Hábitos de Desenvolvedores Altamente Produtivos"
-              author="Zeno Rocha"
-              cover="http://localhost:3000/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png"
-              rating={4.5}
-            />
-            <TrendingCard
-              title="14 Hábitos de Desenvolvedores Altamente Produtivos"
-              author="Zeno Rocha"
-              cover="http://localhost:3000/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png"
-              rating={4.5}
-            />
-            <TrendingCard
-              title="14 Hábitos de Desenvolvedores Altamente Produtivos"
-              author="Zeno Rocha"
-              cover="http://localhost:3000/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png"
-              rating={4.5}
-            />
-            <TrendingCard
-              title="14 Hábitos de Desenvolvedores Altamente Produtivos"
-              author="Zeno Rocha"
-              cover="http://localhost:3000/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png"
-              rating={4.5}
-            />
+            {trendingBooks?.map((book) => (
+              <TrendingCard key={`trending-${book.id}`} data={book} />
+            ))}
           </S.TrendingList>
         </S.TrendingSection>
       </S.Container>

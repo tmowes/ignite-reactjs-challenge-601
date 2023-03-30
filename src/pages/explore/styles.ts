@@ -26,7 +26,21 @@ export const SearchContainer = styled('div', {
 
 export const Tags = styled('div', {
   display: 'flex',
+  flexWrap: 'wrap',
   justifyContent: 'flex-start',
   gap: '$3',
-  marginBottom: '1rem',
+  marginBottom: '$10',
+})
+
+export const BooksGrid = styled('div', {
+  display: 'grid',
+  height: '100%',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gridAutoRows: 188,
+  gap: '$5',
+  overflowY: 'auto',
+  paddingBottom: 40,
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 })

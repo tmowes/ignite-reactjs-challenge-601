@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { RocketLaunch } from 'phosphor-react'
@@ -13,6 +14,10 @@ export default function SignIn() {
 
   return (
     <S.Container>
+      <Head>
+        <title>Login | BookWise</title>
+        <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
+      </Head>
       <S.HeroSection>
         <S.HeroBackground src={previewImg} alt="" />
         <S.Logo src={logoSvg} alt="logo" />

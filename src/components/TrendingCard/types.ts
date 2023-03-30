@@ -1,6 +1,6 @@
+import { BookWithRating } from '@/models/book'
+
 export type TrendingCardProps = {
-  title: string
-  author: string
-  cover: string
-  rating: number
+  data: BookWithRating
+  size?: 'md' | 'lg'
 }

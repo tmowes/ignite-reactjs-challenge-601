@@ -2,10 +2,9 @@ import NextAuth from 'next-auth'
 
 declare module 'next-auth' {
   interface User {
-    id: string
+    id: string | number
     name: string
     email: string
-    emailVerified: null
     avatar_url: string
   }
 

@@ -13,8 +13,13 @@ export const globalStyles = globalCss({
     color: '$gray200',
     fontSize: '$md',
     fontWeight: '$bold',
-
     transition: 'all 0.2s ease-in-out',
+  },
+  a: {
+    color: 'inherit',
+  },
+  'button, input, textarea': {
+    fontFamily: 'inherit',
   },
   body: {
     backgroundColor: '$gray800',
